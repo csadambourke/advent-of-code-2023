@@ -24,19 +24,19 @@ fn sum_lines(v: Vec<String>, param: &str) -> usize {
 }
 fn replace_str_with_int(s: String) -> String {   
     let numbers = HashMap::from([
-        ("one", "1"),
-        ("two", "2"),
-        ("three", "3"),
-        ("four", "4"),
-        ("five", "5"),
-        ("six", "6"),
-        ("seven", "7"),
-        ("eight", "8"),
-        ("nine", "9"),
+        ("one", "on1e"),
+        ("two", "tw2o"),
+        ("three", "thre3e"),
+        ("four", "fou4r"),
+        ("five", "fiv5e"),
+        ("six", "si6x"),
+        ("seven", "seve7n"),
+        ("eight", "eigh8t"),
+        ("nine", "nin9e"),
     ]);
     let mut result = s.clone();
     for (num, val) in numbers {
-        result = result.replace(&num.to_string(), &(num.to_string() + &val + num));
+        result = result.replace(&num.to_string(), val);
     }
     result.to_string()
 }
@@ -48,22 +48,22 @@ mod tests {
 
     #[test]
     fn filter_single_line() {
-        assert_eq!(12, filter_line("1abc2".to_string()));
+        assert_eq!(12, filter_line("1abc2".to_string(), "int only"));
     }
 
     #[test]
     fn no_numbers_in_line() {
-        assert_eq!(0, filter_line("abcde".to_string()));
+        assert_eq!(0, filter_line("abcde".to_string(), "int only"));
     }
 
     #[test]
     fn single_number_in_line() {
-        assert_eq!(88, filter_line("abv8".to_string()));
+        assert_eq!(88, filter_line("abv8".to_string(), "int only"));
     }
 
     #[test]
     fn more_than_two_numbers_in_line() {
-        assert_eq!(19, filter_line("1ab8cde9hf".to_string()));
+        assert_eq!(19, filter_line("1ab8cde9hf".to_string(), "int only"));
     }
 
     #[test]
@@ -71,22 +71,22 @@ mod tests {
         assert_eq!(142, sum_lines(vec!["1abc2".to_string(),
                                  "pqr3stu8vwx".to_string(),
                                  "a1b2c3d4e5f".to_string(),
-                                 "treb7uchet".to_string()]));
+                                 "treb7uchet".to_string()], "int only"));
     }
 
     #[test]
     fn single_line_with_text() {
-        assert_eq!(29, filter_line("two1nine".to_string()));
+        assert_eq!(29, filter_line("two1nine".to_string(), "all"));
     }
 
     #[test]
     fn single_line_with_overlapping_text_at_start() {
-        assert_eq!(24, filter_line("xtwone3four".to_string()));
+        assert_eq!(24, filter_line("xtwone3four".to_string(), "all"));
     }
 
     #[test]
     fn single_line_with_overlapping_text_at_end() {
-        assert_eq!(41, filter_line("xfour3twone".to_string()));
+        assert_eq!(41, filter_line("xfour3twone".to_string(), "all"));
     }
 
     #[test]
@@ -97,6 +97,6 @@ mod tests {
                                 "xtwone3four".to_string(),
                                 "4nineeightseven2".to_string(),
                                 "zoneight234".to_string(),
-                                "7pqrstsixteen".to_string()]));
+                                "7pqrstsixteen".to_string()], "all"));
     }
 }
